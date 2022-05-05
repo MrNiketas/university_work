@@ -1,0 +1,40 @@
+********************************************************************************
+***                       Micro-Cap 12.2.0.4 (64 bit)                        ***
+***                                                                          ***
+***                                                                          ***
+***                   Transient Analysis of SXEM_LR_5 (2)                    ***
+***                           13.12.2021 11:07:44                            ***
+********************************************************************************
+Limits
+======
+Maximum Run Time           54u
+Output Start Time (tstart) 0
+Maximum Time Step          0
+Number of Points           51
+Temperature                Linear 27
+Retrace Runs               1
+Run Options                Normal
+State Variables            Zero
+Operating Point            On
+Operating Point Only       Off
+Auto Scale Ranges          On
+Accumulate Plots           Off
+Fixed Time Step            Off
+Periodic Steady State      Off
+Ignore Expression Errors   Off
+
+
+*****************************************************
+***                Temperature=27                 ***
+*****************************************************
+
+Temperature=27
+
+DC Operating Point Digital States
+=================================
+Node     State Node     State Node     State Node     State Node     State
+1        0     2        1     3        1     4        1     Q        0    
+6        1     W        0     8        1     E        0     10       1    
+R        0     12       1     T        0     Y        0     15       1    
+16       0     17       0     18       0     19       0     20       0    
+

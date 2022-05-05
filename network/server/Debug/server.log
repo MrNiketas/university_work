@@ -1,0 +1,7 @@
+﻿  main.cpp
+D:\work space\univer\network\server\main.cpp(36,2): error C2236: непредвиденный токен "struct". Возможно, отсутствует ";".
+D:\work space\univer\network\server\main.cpp(36,32): error C2513: main::addrinfo *: нет переменных, объявленных перед "="
+D:\work space\univer\network\server\main.cpp(36,32): fatal error C1903: не удается восстановить после предыдущих ошибок; остановка компиляции
+  ВНУТРЕННЯЯ ОШИБКА КОМПИЛЯТОРА в "D:\development prog\VS\VC\Tools\MSVC\14.29.30133\bin\HostX86\x86\CL.exe"
+      Выберите команду "Техническая поддержка" в меню "Справка" Visual C++ или
+      откройте справочный файл технической поддержки для получения доп. сведений
