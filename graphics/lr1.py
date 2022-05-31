@@ -1,56 +1,30 @@
-import matplotlib.pyplot as plt
-from pylab import mpl
+import math
+import matplotlib.pyplot as plot
 import numpy as np
 
-x = [0, 20, 40, 60, 80]
-y = [0, 10, 0, 0, 0]
+x = np.array([0, 1, 2, 3, 4.5], dtype=float)
+y = np.array([0,1, 2, 3, 4], dtype=float)
 
 
-def ParametersOfLagrangeInterpolation(data_x, data_y, size):
-    parameters = []
-    # i используется для управления количеством параметров
-    i = 0
-    while i < size:
-        # jПеременная, используемая для управления циклом, умножается
-        j = 0
-        temp = 1
-        while j < size:
-            if (i != j):
-                temp *= data_x[i] - data_x[j]
-            j += 1
-        parameters.append(data_y[i] / temp)
-        i += 1
-    return parameters
+def lagranz(x, y, t):
+    z = 0
+    for j in range(len(y)):
+        p1 = 1
+        p2 = 1
+        for i in range(len(x)):
+            if i == j:
+                p1 = p1 * 1
+                p2 = p2 * 1
+            else:
+                p1 = p1 * (t - x[i])
+                p2 = p2 * (x[j] - x[i])
+        z = z + y[j] * p1 / p2
+    return z
 
 
-def CalculateTheValueOfLarangeInterpolation(data_x, parameters, x):
-    returnValue = 0
-    i = 0
-    while i < len(parameters):
-        temp = 1
-        j = 0
-        while j < len(parameters):
-            if (i != j):
-                temp *= x - data_x[j]
-            j += 1
-        returnValue += temp * parameters[i]
-        i += 1
-    return returnValue
-
-
-def Draw(data_x, data_y, new_data_x, new_data_y):
-    plt.plot(new_data_x, new_data_y, label="соответствующая кривая", color="black")
-    plt.scatter(data_x, data_y, label="дискретные данные", color="red")
-    mpl.rcParams['axes.unicode_minus'] = False
-    plt.title("Данные подгонки лагранжевой интерполяции")
-    # plt.legend(loc="upper left")
-    plt.show()
-
-
-parameters = ParametersOfLagrangeInterpolation(x, y, 5)
-datax = np.linspace(0, 80, 100)
-# datax=[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
-datay = []
-for temp in datax:
-    datay.append(CalculateTheValueOfLarangeInterpolation(x, parameters, temp))
-Draw(x, y, datax, datay)
+if __name__ == '__main__':
+    xnew = np.linspace(np.min(x), np.max(x), 100)
+    ynew = [lagranz(x, y, i) for i in xnew]
+    plot.plot(x, y, 'o', xnew, ynew)
+    plot.grid(True)
+    plot.show()

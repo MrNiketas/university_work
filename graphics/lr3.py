@@ -1,49 +1,29 @@
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plot
 import numpy as np
-
-
-# Расчет производной от базовой функции
-def dl(i, xi):
-    result = 0.0
-    for j in range(0, len(xi)):
-        if j != i:
-            result += 1 / (xi[i] - xi[j])
-    result *= 2
-    return result
-
-
-# Расчет значения базовой функции
-def l(i, xi, x):
-    deno = 1.0
-    nu = 1.0
-    for j in range(0, len(xi)):
-        if j != i:
-            deno *= (xi[i] - xi[j])
-            nu *= (x - xi[j])
-    return nu / deno
-
-
-# Интерполяционная функция Эрмита
-def get_Hermite(xi, yi, dyi):
-    def he(x):
-        result = 0.0
-        for i in range(0, len(xi)):
-            result += (yi[i] + (x - xi[i]) * (dyi[i] - 2 * yi[i] * dl(i, xi))) * ((l(i, xi, x)) ** 2)
-        return result
-
-    return he
-
-
 import math
 
-sr_x = [(i * math.pi) + (math.pi / 2) for i in range(-3, 3)]
-sr_fx = [math.sin(i) for i in sr_x]
-dx = [0 for i in sr_x]  # все производные 0
-Hx = get_Hermite(sr_x, sr_fx, dx)  # Получить функцию интерполяции
-tmp_x = [i * 0.1 * math.pi for i in range(-26, 27)]  # тестовых случаев
-tmp_y = [Hx(i) for i in
-         tmp_x]  # Получить вертикальную координату контрольного примера в соответствии с функцией интерполяции
-plt.plot(sr_x, sr_fx, 'ro')
-plt.plot(tmp_x, tmp_y, 'b-')
-plt.title('Интерполяция Эрмита')
-plt.show()
+P = np.array([(10,10),(20,10)])
+
+R = np.array([(0,10),(0,10)])
+
+def hermite(t): return P[0]*(2*t**3-3*t**2+1)+P[1]*(-2*t**3+3*t**2)+R[0]*(t**3-2*t**2+t)+R[1]*(t**3-t**2)
+def function_Hermite():
+    fig, ax = plot.subplots()
+    t = np.arange(0,1,0.01)
+    iMax,c = 1000, 0
+    points = np.zeros((2, iMax))
+    for i in t:
+        points[:,c] = hermite(i)
+        c = c+1
+    points = points[:, 0: t.size]
+    plot.xlim((0,22))
+    plot.ylim((0, 12))
+    plot.grid(True)
+    plot.plot(points[0, :], points[1, :])
+
+
+    #ax.arrow(10,10,10,10)
+
+    plot.show()
+if __name__ == '__main__':
+    function_Hermite()
