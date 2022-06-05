@@ -9,8 +9,10 @@ class Database:
 
     def user_exists(self, user_id):
         #Проверка, есть ли пользователь в БД
-        result = self.cursor.execute("SELECT id FROM 'users' WHERE  'user_id' = ?", (user_id))
+        result = self.cursor.execute("SELECT 'id' FROM 'users' WHERE  'user_id' = ?", (user_id,))
+        return bool(len(result.fetchall()))
 
     def add_user(self, user_id):
         # Добавление
-        self.cursor.execute("INSERT INTO 'users' (user_id) VALUE (?)", (user_id,))
+        self.cursor.execute("INSERT INTO 'users' (user_id) VALUES (?)", (user_id,))
+        return self.conn.commit()
