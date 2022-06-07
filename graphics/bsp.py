@@ -37,9 +37,11 @@ fig, ax = plt.subplots()
 plt.plot(x2,y2,'o',x_new2, y_new2, color="blue")
 plt.grid()
 plt.show()
+"""
 plt.plot(x2_1,y2_1,'o',Spline2(x2_1),Spline2(y2_1), color="blue")
 plt.grid()
 plt.show()
+"""
 plt.plot(x2_2,y2_2,'o',Spline2(x2_2),Spline2(y2_2), color="blue")
 plt.grid()
 plt.show()

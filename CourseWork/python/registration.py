@@ -10,19 +10,30 @@ dp = Dispatcher(bot)
 
 db = Database('accountant.db')
 
-@dp.message_handler(commands=['start'])
+@dp.message_handler(commands=['start'], content_types='text')
 async def start_command(message: types.Message):
     if(not db.user_exists(message.from_user.id)):
         db.add_user(message.from_user.id)
-        await bot.send_message(message.from_user.id, "Укажите ваше Имя")
+        await bot.send_message(message.from_user.id, "Привет! У тебя ещё нет анкеты, давай это исправим!")
+        await bot.send_message(message.from_user.id, "Как тебя зовут?")
     else:
-        await bot.send_message(message.from_user.id, "Вы уже зарегестрированы")
-"""""
-@dp.message_handler()
-async def bot_message(message: types.Message):
-    if message.chat.type == 'private':
-        db.
-"""""
+        await bot.send_message(message.from_user.id, "Вы уже зарегестрированы.")
+    await bot.regi
+    if message.text == 'конец':
+        await bot.send_message(message.from_user.id, "мне конец")
+
+
+
+@dp.message_handler(commands=['delete_profile'])
+async def delete_command(message: types.Message):
+    if (not db.user_exists(message.from_user.id)):
+        await bot.send_message(message.from_user.id, "У вас нет профиля.")
+    else:
+        db.delete_user(message.from_user.id)
+        await bot.send_message(message.from_user.id, "Ваш профиль успешно удален.")
+
+
+
 
 
 
