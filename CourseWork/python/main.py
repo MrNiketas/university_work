@@ -23,6 +23,12 @@ def add_user(self, user_id, name, gender, age, city, photo, about_me):
 """""
 
 
+def add_user(self, user_id, name):
+    # Добавление
+    self.cursor.execute("INSERT INTO `users` (user_id,name) VALUES (?,?)", (user_id, name))
+    return self.conn.commit()
+
+
 def add_user(self, user_id):
     # Добавление
     self.cursor.execute("INSERT INTO `users` (user_id) VALUES (?)", (user_id,))

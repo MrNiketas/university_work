@@ -2,12 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14fb82f3-6028-4304-8f4e-60b5e011858c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../CW/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CW/.idea/CW.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CW/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CW/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CW/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CW/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python/accountant.db" beforeDir="false" afterPath="$PROJECT_DIR$/python/accountant.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python/registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/registration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../graphics/bsp.py" beforeDir="false" afterPath="$PROJECT_DIR$/../graphics/bsp.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

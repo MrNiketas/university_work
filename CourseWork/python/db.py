@@ -12,9 +12,12 @@ class Database:
         result = self.cursor.execute("SELECT `id` FROM `users` WHERE  `user_id` = ?", (user_id,))
         return bool(len(result.fetchall()))
 
-    def add_user(self, user_id):
+
+    def add_user(self, user_id, name, gender, age, city, photo, about_me):
         # Добавление
-        self.cursor.execute("INSERT INTO `users` (user_id) VALUES (?)", (user_id,))
+        self.cursor.execute("INSERT INTO `users` (user_id,name, gender,"
+                            " age, city, photo, about_me ) VALUES (?,?,?,?,?,?,?)",
+                            (user_id, name, gender, age, city, photo, about_me))
         return self.conn.commit()
 
     def delete_user(self, user_id):
