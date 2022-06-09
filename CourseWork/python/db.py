@@ -21,6 +21,17 @@ class Database:
         return self.conn.commit()
 
     def delete_user(self, user_id):
-        # Удалени профиля
+        # Удаление профиля
         self.cursor.execute("DELETE FROM users WHERE user_id = ?", (user_id,))
         return self.conn.commit()
+
+    def show_profile(self, user_id):
+        # Показать профиль
+        profile = self.cursor.execute("SELECT name,gender, age,city,photo FROM users WHERE user_id = ?",(user_id,))
+        return profile.fetchone()
+
+
+    def show_all_profiles(self, user_id):
+        # Показать профиль
+        profiles = self.cursor.execute("SELECT * FROM users WHERE user_id != ?", (user_id,))
+        return profiles.fetchall()

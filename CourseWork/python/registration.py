@@ -16,8 +16,7 @@ dp.middleware.setup(LoggingMiddleware())
 
 db = Database('accountant.db')
 
-
-
+# РЕГЕСТРАЦИЯ
 class UserProfile(StatesGroup):
     s_name = State()
     s_gender = State()
@@ -70,20 +69,15 @@ async def get_about(message: types.Message, state: FSMContext):
     db.add_user(message.from_user.id, buff['name'], buff['gender'], buff['age'], buff['city'],
                 buff['photo'], buff['about_me'])
     await state.finish()
-
-
-
+"""""
 @dp.message_handler(commands=['start'], content_types='text')
 async def start_command(message: types.Message):
     if(not db.user_exists(message.from_user.id)):
-        db.add_user(message.from_user.id)
         await bot.send_message(message.from_user.id, "Привет! У тебя ещё нет анкеты, давай это исправим!")
 
     else:
         await bot.send_message(message.from_user.id, "Вы уже зарегестрированы.")
-
-
-
+"""""
 @dp.message_handler(commands=['delete_profile'])
 async def delete_command(message: types.Message):
     if (not db.user_exists(message.from_user.id)):
@@ -92,6 +86,20 @@ async def delete_command(message: types.Message):
         db.delete_user(message.from_user.id)
         await bot.send_message(message.from_user.id, "Ваш профиль успешно удален.")
 
+@dp.message_handler(commands=['show_my_profile'])
+async def show_profile(message: types.Message):
+    await bot.send_message(message.from_user.id, db.show_profile(message.from_user.id))
+
+@dp.message_handler(commands=['show_all'])
+async def show_all(message: types.Message):
+    await bot.send_message(message.from_user.id, db.show_all_profiles(message.from_user.id))
+
+@dp.message_handler(commands="start")
+async def cmd_start(message: types.Message):
+    keyboard = types.ReplyKeyboardMarkup()
+    button_1 = types.KeyboardButton(text="/reg")
+    keyboard.add(button_1)
+    await message.answer("Как подавать котлеты?", reply_markup=keyboard)
 
 if __name__ == '__main__':
     executor.start_polling(dp)
