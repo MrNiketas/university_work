@@ -4,11 +4,6 @@ from threading import Thread
 import time
 import matplotlib.pyplot as plot
 import numpy as np
-
-
-
-
-
 #while True:
 #   try:
 #        client,addr = sock.accept()
