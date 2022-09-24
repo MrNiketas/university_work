@@ -5,6 +5,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from db import Database
 
@@ -17,6 +18,7 @@ dp.middleware.setup(LoggingMiddleware())
 db = Database('accountant.db')
 
 # РЕГЕСТРАЦИЯ
+
 class UserProfile(StatesGroup):
     s_name = State()
     s_gender = State()
@@ -27,19 +29,23 @@ class UserProfile(StatesGroup):
 
 @dp.message_handler(commands=['reg'])
 async def user_register(message: types.Message):
-    await message.answer("Введите своё имя")
+    await message.answer("Введите своё имя",reply_markup=types.ReplyKeyboardRemove())
     await UserProfile.s_name.set()
 
 @dp.message_handler(state=UserProfile.s_name)
 async def get_username(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text)
-    await message.answer("Приятно познакомиться! Теперь назовите ваш пол.")
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    buttons = ["муж", "жен"]
+    keyboard.add(*buttons)
+    await message.answer("Приятно познакомиться! Теперь назовите ваш пол.",  reply_markup=keyboard)
+
     await UserProfile.next()
 
 @dp.message_handler(state=UserProfile.s_gender)
 async def get_gender(message: types.Message, state: FSMContext):
     await state.update_data(gender=message.text)
-    await message.answer("Отлично! Скажите, сколько вам лет?")
+    await message.answer("Отлично! Скажите, сколько вам лет?",reply_markup=types.ReplyKeyboardRemove())
     await UserProfile.next()
 
 @dp.message_handler(state=UserProfile.s_age)
@@ -88,7 +94,9 @@ async def delete_command(message: types.Message):
 
 @dp.message_handler(commands=['show_my_profile'])
 async def show_profile(message: types.Message):
-    await bot.send_message(message.from_user.id, db.show_profile(message.from_user.id))
+    ph = db.get_photo(message.from_user.id)
+    caption = output(db.show_profile(message.from_user.id))
+    await bot.send_photo(message.from_user.id, ph, caption)
 
 @dp.message_handler(commands=['show_all'])
 async def show_all(message: types.Message):
@@ -96,10 +104,57 @@ async def show_all(message: types.Message):
 
 @dp.message_handler(commands="start")
 async def cmd_start(message: types.Message):
-    keyboard = types.ReplyKeyboardMarkup()
-    button_1 = types.KeyboardButton(text="/reg")
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    button_1 = types.KeyboardButton(text="Зарегестрироваться")
     keyboard.add(button_1)
-    await message.answer("Как подавать котлеты?", reply_markup=keyboard)
+    await message.answer("Хотите зарегестрироваться??", reply_markup=keyboard)
+
+@dp.message_handler(commands="menu")
+async def menu(message: types.Message):
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    button_1 = types.KeyboardButton(text="Просмотр анкет")
+    button_2 = "Просмотр всех анкет"
+    button_3 = "Просмотр профиля"
+    button_4 = "Удалить профиль"
+    keyboard.add(button_1, button_2, button_3, button_4)
+    await message.answer("Жду твоего действия...", reply_markup=keyboard)
+
+@dp.message_handler(commands="q")
+async def qw(message: types.Message):
+    await message.answer("Напиши мне от какого возраста показывать анкеты?")
+
+@dp.message_handler(commands="q1")
+async def qw(message: types.Message):
+    await message.answer("Напиши мне до какого возраста показывать анкеты?")
+
+@dp.message_handler(commands="q0")
+async def qw(message: types.Message):
+
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    buttons = ["муж", "жен"]
+    keyboard.add(*buttons)
+    await message.answer("Выбери желаемый пол", reply_markup=keyboard)
+
+@dp.message_handler(commands="show")
+async def qw(message: types.Message):
+    ph = db.get_photo('1100514645')
+    caption = output(db.show_profile('1100514645'))
+    keyboard = types.InlineKeyboardMarkup()
+    keyboard.add(types.InlineKeyboardButton(text="Написать", callback_data="random_value"))
+    await bot.send_photo(message.from_user.id, ph, caption, reply_markup=keyboard)
+
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    buttons = ["Дальше", "Стоп"]
+    keyboard.add(*buttons)
+    await message.answer("Что делаем?", reply_markup=keyboard)
+
+def output(date):
+    st = ''
+    for item in date:
+        if type(item) is int:
+            item = str(item)
+        st = st + item + '\n'
+    return st
 
 if __name__ == '__main__':
     executor.start_polling(dp)

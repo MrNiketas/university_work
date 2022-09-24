@@ -27,11 +27,16 @@ class Database:
 
     def show_profile(self, user_id):
         # Показать профиль
-        profile = self.cursor.execute("SELECT name,gender, age,city,photo FROM users WHERE user_id = ?",(user_id,))
+        profile = self.cursor.execute("SELECT name,gender, age,city, about_me FROM users WHERE user_id = ?",(user_id,))
         return profile.fetchone()
 
 
     def show_all_profiles(self, user_id):
-        # Показать профиль
-        profiles = self.cursor.execute("SELECT * FROM users WHERE user_id != ?", (user_id,))
+        # Показать все профили
+        profiles = self.cursor.execute("SELECT name,gender, age,city FROM users WHERE user_id != ?", (user_id,))
         return profiles.fetchall()
+
+    def get_photo(self, user_id):
+        profiles = self.cursor.execute("SELECT photo FROM users WHERE user_id = ?", (user_id,))
+        buff = profiles.fetchone()
+        return buff[0]
